@@ -4,6 +4,7 @@ const bp = require('body-parser');
 
 
 app.use(bp.urlencoded({extended:true}));
+app.use(bp.text());
 
 let homeData={ temp:"No data received yet", humidity: "No data received yet" };
 
@@ -12,9 +13,14 @@ app.get('/set-data', (req, res) => {
 });
 
 app.post('/set-data', (req, res) => {
-    console.log(req.body);
-    homeData=req.body;
-    res.render('espSimulator.ejs');
+    console.log("Post req called: "+req.body);
+	let data = req.body.split('|');
+	homeData.temp = Number(data[0]);
+	homeData.humidity = Number(data[1]);
+	// homeData = JSON.parse(req.body);
+    // homeData=req.body;
+	res.status(200).send(); 
+    // res.render('espSimulator.ejs');
 });
 
 app.get('', (req, res) => {
@@ -24,7 +30,8 @@ app.get('', (req, res) => {
 
 
 app.get('/get-data', (req, res) => {
-    res.send( homeData );
+	console.log("get-req-called:"+homeData);
+    res.status(200).send( homeData );
 });
 
 app.listen(3000,()=>{

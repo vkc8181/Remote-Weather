@@ -21,9 +21,37 @@
 </head>
 <body>
     <div class="container">
-        <a href="/get-data">Get Data</a>
-        <a href="/set-data">Set Data (ESP Simulator)</a>
+		<h1>Temperature: <span id="tmp">NA</span></h1>
+		<h1>Humidity: <span id="hum">NA</span></h1>
     </div>
-    
+	
+    <script>
+		const tE = document.querySelector('#tmp');
+		const hE = document.querySelector('#hum');
+		function updateData(){
+    		
+			fetch('/get-data')
+			 
+			  .then( response => {
+				if (!response.ok) {
+				  throw new Error(`HTTP error: ${response.status}`);
+				}
+				
+				return response.json();
+			  })
+			.then(res=>{
+				let tmp = res.temp;
+				let humidity = res.humidity;
+				
+				tE.innerHTML = tmp;
+				hE.innerHTML = humidity;
+			})
+
+    		setTimeout(updateData, 5000);
+		}
+
+		updateData();
+	</script>
+	
 </body>
 </html>
