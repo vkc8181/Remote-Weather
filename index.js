@@ -6,7 +6,12 @@ const bp = require('body-parser');
 app.use(bp.urlencoded({extended:true}));
 app.use(bp.text());
 
-let homeData={ temp:"No data received yet", humidity: "No data received yet" };
+let homeData={  temp:"No data received yet",
+                humidity: "No data received yet", 
+                press: "No data received yet", 
+                alt: "No data received yet", 
+                lI: "No data received yet"
+            };
 
 app.get('/set-data', (req, res) => {
     res.render('espSimulator.ejs');
@@ -17,6 +22,9 @@ app.post('/set-data', (req, res) => {
 	let data = req.body.split('|');
 	homeData.temp = Number(data[0]);
 	homeData.humidity = Number(data[1]);
+	homeData.press = Number(data[2]);
+	homeData.alt = Number(data[3]);
+	homeData.lI = Number(data[4]);
 	// homeData = JSON.parse(req.body);
     // homeData=req.body;
 	res.status(200).send(); 

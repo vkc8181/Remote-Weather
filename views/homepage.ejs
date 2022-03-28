@@ -23,11 +23,17 @@
     <div class="container">
 		<h1>Temperature: <span id="tmp">NA</span></h1>
 		<h1>Humidity: <span id="hum">NA</span></h1>
+		<h1>Atmospheric Pressue: <span id="ap">NA</span></h1>
+		<h1>Altitude: <span id="alt">NA</span></h1>
+		<h1>Light Intensity: <span id="li">NA</span></h1>
     </div>
 	
     <script>
 		const tE = document.querySelector('#tmp');
 		const hE = document.querySelector('#hum');
+		const apE = document.querySelector('#ap');
+		const altE = document.querySelector('#alt');
+		const liE = document.querySelector('#li');
 		function updateData(){
     		
 			fetch('/get-data')
@@ -42,9 +48,15 @@
 			.then(res=>{
 				let tmp = res.temp;
 				let humidity = res.humidity;
+				let pressure = res.press;
+				let altitude = res.alt;
+				let lightIntensity = res.lI;
 				
 				tE.innerHTML = tmp;
 				hE.innerHTML = humidity;
+				apE.innerHTML = pressure;
+				altE.innerHTML = altitude;
+				liE.innerHTML = lightIntensity;
 			})
 
     		setTimeout(updateData, 5000);
