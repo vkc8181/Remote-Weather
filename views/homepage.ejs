@@ -24,6 +24,7 @@
 		<h1>Temperature: <span id="tmp">NA</span></h1>
 		<h1>Humidity: <span id="hum">NA</span></h1>
 		<h1>Atmospheric Pressue: <span id="ap">NA</span></h1>
+		<h1>Relative Pressue(sea-level): <span id="slp">NA</span></h1>
 		<h1>Altitude: <span id="alt">NA</span></h1>
 		<h1>Light Intensity: <span id="li">NA</span></h1>
     </div>
@@ -32,6 +33,7 @@
 		const tE = document.querySelector('#tmp');
 		const hE = document.querySelector('#hum');
 		const apE = document.querySelector('#ap');
+		const slpE = document.querySelector('#slp');
 		const altE = document.querySelector('#alt');
 		const liE = document.querySelector('#li');
 		function updateData(){
@@ -46,17 +48,30 @@
 				return response.json();
 			  })
 			.then(res=>{
+				
 				let tmp = res.temp;
 				let humidity = res.humidity;
 				let pressure = res.press;
+				let slPressure = res.slPress;
 				let altitude = res.alt;
 				let lightIntensity = res.lI;
 				
-				tE.innerHTML = tmp;
-				hE.innerHTML = humidity;
-				apE.innerHTML = pressure;
-				altE.innerHTML = altitude;
-				liE.innerHTML = lightIntensity;
+				if(tmp){
+					tE.innerHTML = tmp+'°C';
+					hE.innerHTML = humidity;
+					apE.innerHTML = pressure+'mb';
+					slpE.innerHTML = slPressure+'mb';
+					altE.innerHTML = altitude+'mtr';
+					liE.innerHTML = lightIntensity;
+				}
+				else{
+					tE.innerHTML = 'No data received on server yet';
+					hE.innerHTML = 'No data received on server yet';
+					apE.innerHTML = 'No data received on server yet';
+					slpE.innerHTML = 'No data received on server yet';
+					altE.innerHTML = 'No data received on server yet';
+					liE.innerHTML = 'No data received on server yet';
+				}
 			})
 
     		setTimeout(updateData, 5000);

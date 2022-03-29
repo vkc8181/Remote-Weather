@@ -6,11 +6,19 @@ const bp = require('body-parser');
 app.use(bp.urlencoded({extended:true}));
 app.use(bp.text());
 
-let homeData={  temp:"No data received yet",
-                humidity: "No data received yet", 
-                press: "No data received yet", 
-                alt: "No data received yet", 
-                lI: "No data received yet"
+// let homeData={  temp:"No data received yet",
+//                 humidity: "No data received yet", 
+//                 press: "No data received yet", 
+//                 slPress: "No data received yet", 
+//                 alt: "No data received yet", 
+//                 lI: "No data received yet"
+//             };
+let homeData={  temp:undefined,
+                humidity: undefined, 
+                press: undefined, 
+                slPress: undefined, 
+                alt: undefined, 
+                lI: undefined
             };
 
 app.get('/set-data', (req, res) => {
@@ -23,8 +31,9 @@ app.post('/set-data', (req, res) => {
 	homeData.temp = Number(data[0]);
 	homeData.humidity = Number(data[1]);
 	homeData.press = Number(data[2]);
-	homeData.alt = Number(data[3]);
-	homeData.lI = Number(data[4]);
+	homeData.slPress = Number(data[3]);
+	homeData.alt = Number(data[4]);
+	homeData.lI = Number(data[5]);
 	// homeData = JSON.parse(req.body);
     // homeData=req.body;
 	res.status(200).send(); 
